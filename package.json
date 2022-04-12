@@ -1,0 +1,21 @@
+{
+  "name": "passive-promise",
+  "version": "0.0.1",
+  "description": "Promise that's resolvable from outside of executor context.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "node test/index.js"
+  },
+  "type": "module",
+  "repository": "https://github.com/ScripterSugar/passive-promise",
+  "author": "ScripterSugar",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "eslint": "^8.12.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.6.3"
+  }
+}
