@@ -20,7 +20,7 @@ export class PassivePromise extends Promise<unknown> {
     super((resolve, reject) => {
       passiveResolvers.resolve = resolve;
       passiveResolvers.reject = reject;
-      return promiseResolver(resolve, reject);
+      return promiseResolver?.(resolve, reject);
     });
 
     const _then = this.then.bind(this);
