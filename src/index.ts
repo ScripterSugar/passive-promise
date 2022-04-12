@@ -12,28 +12,26 @@ export class PassivePromise extends Promise<unknown> {
   finally?: (afterResolver: () => void) => PassivePromise
 
   constructor(promiseResolver: Executor) {
-    const passiveResolvers: { resolve: Resolver, reject: Rejector } = {
-      resolve: () => { return; },
-      reject: () => { return; },
-    };
+    let passiveResolver: Resolver = () => undefined;
+    let passiveRejector: Rejector = () => undefined;
 
     super((resolve, reject) => {
-      passiveResolvers.resolve = resolve;
-      passiveResolvers.reject = reject;
+      passiveResolver = resolve;
+      passiveRejector = reject;
       return promiseResolver?.(resolve, reject);
     });
 
     const _then = this.then.bind(this);
     const _catch = this.catch.bind(this);
 
-    this.then = ((afterResolver) => {
-      const chainedPromise = (_then(afterResolver) as PassivePromise);
+    this.then = ((afterResolver, afterRejector, ...restArgs ) => {
+      const chainedPromise = (_then(afterResolver, afterRejector, ...restArgs) as PassivePromise);
       chainedPromise.parentPromise = this;
       return (chainedPromise as Promise<any>);
     });
 
-    this.catch = ((afterResolver) => {
-      const chainedPromise = (_catch(afterResolver) as PassivePromise);
+    this.catch = ((afterRejector, ...restArgs ) => {
+      const chainedPromise = (_catch(afterRejector, ...restArgs ) as PassivePromise);
       chainedPromise.parentPromise = this;
       return (chainedPromise as Promise<any>);
     });
@@ -41,15 +39,15 @@ export class PassivePromise extends Promise<unknown> {
     if (this.finally) {
       const _finally = this.finally.bind(this);
 
-      this.finally = ((afterResolver) => {
-        const chainedPromise = _finally(afterResolver);
+      this.finally = ((afterResolver, ...restArgs) => {
+        const chainedPromise = _finally(afterResolver, ...restArgs);
         chainedPromise.parentPromise = this;
         return chainedPromise;
       });
     }
 
-    this.passiveResolve = passiveResolvers.resolve;
-    this.passiveReject = passiveResolvers.reject;
+    this.passiveResolve = passiveResolver;
+    this.passiveReject = passiveRejector;
 
     return this;
   }
