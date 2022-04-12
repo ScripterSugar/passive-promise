@@ -1,6 +1,6 @@
 {
   "name": "passive-promise",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Promise that's resolvable from outside of executor context.",
   "main": "lib/index.js",
   "scripts": {
