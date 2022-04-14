@@ -16,7 +16,7 @@ or
 
 `yarn add passive-promise`
 
-The library exported with esnext module syntax.
+The library supports pure ESM only and not exported as commonJS module syntax.
 
 ## Usage Examples
 
