@@ -20,7 +20,7 @@ The library supports pure ESM only and not exported as commonJS module syntax.
 
 ## Usage Examples
 
-Just use exactly like normal promise, but returned promise (which is extended Promise class) also comes with the `resolve()` and `reject()` method in it, which you can use them to force resolve or reject the promise from outside.
+Just use exactly like normal promise, but returned promise (which is extended Promise class) also comes with the `resolve()` and `reject()` method in it, which you can use to force resolve or reject the promise from outside.
 
 All the chain methods such as then, catch, finally works as expected, but remind that the both resolve, reject method of any chained PassivePromise instance will propagate to the root PassivePromise instance regardless of its depth.
 
