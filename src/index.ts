@@ -2,7 +2,7 @@ type Resolver = (value: unknown) => void;
 type Rejector = (reason?: any) => void;
 type Executor = (resolve: (value: unknown) => void, reject: (reason?: any) => void) => void;
 
-export class PassivePromise extends Promise<unknown> {
+export class PassivePromise<V> extends Promise<V> {
   passiveResolve: Resolver
 
   passiveReject: Rejector
